@@ -9,7 +9,7 @@ export interface ITransaction {
   created_at: string;
 }
 
-interface ITransactionState {
+export interface ITransactionState {
   transactions: ITransaction[]
 }
 

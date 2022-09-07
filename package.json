@@ -10,6 +10,7 @@
     "dev:server": "npx json-server server.json -p 3333 -w -d 500"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.7",
     "@radix-ui/react-dialog": "^1.0.0",
     "@radix-ui/react-popover": "1.0.0",
     "@radix-ui/react-radio-group": "^1.0.0",
