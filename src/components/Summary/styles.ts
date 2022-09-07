@@ -38,4 +38,7 @@ export const SummaryCard = styled.div<SummaryCardProps>`
   ${props => props.variant === 'income' && css`
     background: ${props.theme.colors['green-700']};
   `}
+  ${props => props.variant === 'outcome' && css`
+    background: ${props.theme.colors['red-700']};
+  `}
 `
