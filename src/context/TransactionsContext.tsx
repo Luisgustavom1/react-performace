@@ -8,7 +8,8 @@ import {
 
 interface ITransactionContextData {
   transactions: ITransaction[];
-  loadTransactions: (search: string) => Promise<void>;
+  dispatch: React.Dispatch<ITransactionsReducer>;
+  dispatchAsyncReducer: (value: ITransactionsReducer) => Promise<void>
 }
 
 export const TransactionContext = createContext({} as ITransactionContextData);
@@ -18,7 +19,7 @@ const TransactionProvider = ({ children }: React.PropsWithChildren<{}>) => {
     transactions: [],
   });
 
-  const transactionsAsyncReducer = useCallback(
+  const dispatchAsyncReducer = useCallback(
     async (action: ITransactionsReducer) => {
       switch (action.type) {
         case TransactionsActions.ActionTypes.LOAD_ALL_TRANSACTIONS:
@@ -40,20 +41,17 @@ const TransactionProvider = ({ children }: React.PropsWithChildren<{}>) => {
     []
   );
 
-  const loadTransactions = async (search?: string) => {
-    await transactionsAsyncReducer(
-      TransactionsActions.loadTransactionsAction(search)
-    );
-  };
-
   useEffect(() => {
-    loadTransactions();
+    dispatchAsyncReducer(
+      TransactionsActions.loadTransactionsAction()
+    );
   }, []);
   return (
     <TransactionContext.Provider
       value={{
         transactions: transactionsState.transactions,
-        loadTransactions,
+        dispatch,
+        dispatchAsyncReducer
       }}
     >
       {children}
