@@ -22,7 +22,7 @@ export const Summary = () => {
         <strong>R$ 17.400,00</strong>
       </SummaryCard>
 
-      <SummaryCard variant='secondary'>
+      <SummaryCard variant='income'>
         <header>
           <span>Total</span>
           <CurrencyDollar size={32} color="#fff" />
