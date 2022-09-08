@@ -3,7 +3,6 @@ import * as z from 'zod'
 import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import * as TransactionActions from '../../reducers/transactions/actions'
 import {
   CloseButton,
   Content,
@@ -12,7 +11,6 @@ import {
   TransactionTypeButton,
 } from './styles'
 import { TransactionContext } from '../../context/TransactionsContext'
-import { dispatchTransactionsAsyncReducer } from '../../reducers/transactions/transactions'
 import { useContextSelector } from 'use-context-selector'
 
 const newTransactionModalForm = z.object({
@@ -25,13 +23,10 @@ const newTransactionModalForm = z.object({
 type NewTransactionModalForm = z.infer<typeof newTransactionModalForm>
 
 export const NewTransactionModal = () => {
-  const { transactions, dispatch } = useContextSelector(
+  const createNewTransaction = useContextSelector(
     TransactionContext,
     (context) => {
-      return {
-        transactions: context.transactions,
-        dispatch: context.dispatch,
-      }
+      return context.createNewTransaction
     },
   )
   const {
@@ -45,14 +40,10 @@ export const NewTransactionModal = () => {
   })
 
   const handleCreateNewTransaction = async (data: NewTransactionModalForm) => {
-    await dispatchTransactionsAsyncReducer(
-      { transactions },
-      TransactionActions.createNewTransactionAction({
-        ...data,
-        created_at: new Date().toISOString(),
-      }),
-      dispatch,
-    )
+    await createNewTransaction({
+      ...data,
+      created_at: new Date().toISOString(),
+    })
 
     reset()
   }

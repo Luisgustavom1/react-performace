@@ -55,3 +55,5 @@ export const resetTransactionsAction = (initialState: ITransaction[]) => {
     },
   }
 }
+
+export type { ICreateTransactionInput }

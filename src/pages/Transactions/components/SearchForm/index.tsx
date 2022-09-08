@@ -3,9 +3,7 @@ import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SearchFormContainer } from './styles'
-import * as TransictionsAction from '../../../../reducers/transactions/actions'
 import { TransactionContext } from '../../../../context/TransactionsContext'
-import { dispatchTransactionsAsyncReducer } from '../../../../reducers/transactions/transactions'
 import { useContextSelector } from 'use-context-selector'
 
 const searchFormSchema = z.object({
@@ -15,13 +13,10 @@ const searchFormSchema = z.object({
 type SearchFormInputs = z.infer<typeof searchFormSchema>
 
 export const SearchForm = () => {
-  const { transactions, dispatch } = useContextSelector(
+  const loadAllTransactions = useContextSelector(
     TransactionContext,
     (context) => {
-      return {
-        transactions: context.transactions,
-        dispatch: context.dispatch,
-      }
+      return context.loadAllTransactions
     },
   )
   const {
@@ -33,11 +28,7 @@ export const SearchForm = () => {
   })
 
   const handleSearchTransactions = async (data: SearchFormInputs) => {
-    await dispatchTransactionsAsyncReducer(
-      { transactions },
-      TransictionsAction.loadTransactionsAction(data.query),
-      dispatch,
-    )
+    await loadAllTransactions(data.query)
   }
 
   return (
