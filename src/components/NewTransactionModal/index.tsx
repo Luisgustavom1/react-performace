@@ -1,26 +1,31 @@
-import * as Dialog from "@radix-ui/react-dialog";
-import * as z from "zod";
-import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
+import { useContext } from 'react'
+import * as Dialog from '@radix-ui/react-dialog'
+import * as z from 'zod'
+import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react'
+import { Controller, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as TransactionActions from '../../reducers/transactions/actions'
 import {
   CloseButton,
   Content,
   Overlay,
   TransactionType,
   TransactionTypeButton,
-} from "./styles";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from './styles'
+import { TransactionContext } from '../../context/TransactionsContext'
+import { dispatchTransactionsAsyncReducer } from '../../reducers/transactions/transactions'
 
 const newTransactionModalForm = z.object({
   description: z.string(),
   price: z.number(),
   category: z.string(),
-  type: z.enum(["income", "outcome"]),
-});
+  type: z.enum(['income', 'outcome']),
+})
 
-type NewTransactionModalForm = z.infer<typeof newTransactionModalForm>;
+type NewTransactionModalForm = z.infer<typeof newTransactionModalForm>
 
 export const NewTransactionModal = () => {
+  const { transactions, dispatch } = useContext(TransactionContext)
   const {
     register,
     handleSubmit,
@@ -28,13 +33,18 @@ export const NewTransactionModal = () => {
     control,
   } = useForm<NewTransactionModalForm>({
     resolver: zodResolver(newTransactionModalForm),
-  });
+  })
 
   const handleCreateNewTransaction = async (data: NewTransactionModalForm) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("query", data);
-    return;
-  };
+    await dispatchTransactionsAsyncReducer(
+      { transactions },
+      TransactionActions.createNewTransactionAction({
+        ...data,
+        created_at: new Date().toISOString(),
+      }),
+      dispatch,
+    )
+  }
 
   return (
     <Dialog.Portal>
@@ -49,21 +59,21 @@ export const NewTransactionModal = () => {
 
         <form action="" onSubmit={handleSubmit(handleCreateNewTransaction)}>
           <input
-            {...register("description")}
+            {...register('description')}
             type="text"
             placeholder="Descrição"
             name="description"
             required
           />
           <input
-            {...register("price", { valueAsNumber: true })}
+            {...register('price', { valueAsNumber: true })}
             type="text"
             placeholder="Preço"
             name="price"
             required
           />
           <input
-            {...register("category")}
+            {...register('category')}
             type="text"
             placeholder="Categoria"
             name="category"
@@ -99,5 +109,5 @@ export const NewTransactionModal = () => {
         <Dialog.Description />
       </Content>
     </Dialog.Portal>
-  );
-};
+  )
+}
