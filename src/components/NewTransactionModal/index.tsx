@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import * as z from 'zod'
 import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react'
@@ -14,6 +13,7 @@ import {
 } from './styles'
 import { TransactionContext } from '../../context/TransactionsContext'
 import { dispatchTransactionsAsyncReducer } from '../../reducers/transactions/transactions'
+import { useContextSelector } from 'use-context-selector'
 
 const newTransactionModalForm = z.object({
   description: z.string(),
@@ -25,12 +25,21 @@ const newTransactionModalForm = z.object({
 type NewTransactionModalForm = z.infer<typeof newTransactionModalForm>
 
 export const NewTransactionModal = () => {
-  const { transactions, dispatch } = useContext(TransactionContext)
+  const { transactions, dispatch } = useContextSelector(
+    TransactionContext,
+    (context) => {
+      return {
+        transactions: context.transactions,
+        dispatch: context.dispatch,
+      }
+    },
+  )
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
     control,
+    reset,
   } = useForm<NewTransactionModalForm>({
     resolver: zodResolver(newTransactionModalForm),
   })
@@ -44,6 +53,8 @@ export const NewTransactionModal = () => {
       }),
       dispatch,
     )
+
+    reset()
   }
 
   return (

@@ -15,6 +15,78 @@
       "category": "compra",
       "price": 114000,
       "created_at": "2022-09-07T23:02:26.543Z"
+    },
+    {
+      "description": "Description",
+      "price": 4312,
+      "category": "compra",
+      "type": "outcome",
+      "created_at": "2022-09-08T00:09:15.163Z",
+      "id": 3
+    },
+    {
+      "description": "Description",
+      "price": 4312,
+      "category": "compra",
+      "type": "outcome",
+      "created_at": "2022-09-08T00:35:44.080Z",
+      "id": 4
+    },
+    {
+      "description": "Description",
+      "price": 4312,
+      "category": "compra",
+      "type": "outcome",
+      "created_at": "2022-09-08T00:35:52.177Z",
+      "id": 5
+    },
+    {
+      "description": "ada",
+      "price": 3123,
+      "category": "fsf",
+      "type": "income",
+      "created_at": "2022-09-08T00:37:00.904Z",
+      "id": 6
+    },
+    {
+      "description": "description",
+      "price": 13,
+      "category": "dasdad",
+      "type": "income",
+      "created_at": "2022-09-08T00:40:06.206Z",
+      "id": 7
+    },
+    {
+      "description": "description'",
+      "price": 432432,
+      "category": "fdsf",
+      "type": "outcome",
+      "created_at": "2022-09-08T00:42:11.358Z",
+      "id": 8
+    },
+    {
+      "description": "description",
+      "price": 465116,
+      "category": "dasda",
+      "type": "income",
+      "created_at": "2022-09-08T00:46:23.154Z",
+      "id": 9
+    },
+    {
+      "description": "description",
+      "price": 123123,
+      "category": "fsdfdsf",
+      "type": "income",
+      "created_at": "2022-09-08T00:47:38.728Z",
+      "id": 10
+    },
+    {
+      "description": "description",
+      "price": 12312,
+      "category": "dasd",
+      "type": "income",
+      "created_at": "2022-09-08T01:10:55.241Z",
+      "id": 11
     }
   ]
 }

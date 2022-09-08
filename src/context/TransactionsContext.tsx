@@ -1,4 +1,5 @@
-import React, { createContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { createContext } from 'use-context-selector'
 import * as TransactionsActions from '../reducers/transactions/actions'
 import {
   dispatchTransactionsAsyncReducer,
